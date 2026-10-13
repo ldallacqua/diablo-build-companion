@@ -13,7 +13,7 @@
 - [x] Original fixture tests, E2E workflow and reviewed visual comparisons
 - [x] Final packaged Windows app verified
 - [x] Public repository and remote CI verified
-- [ ] Tested release artifacts published
+- [x] Tested release artifacts published
 - [ ] Real Diablo IV borderless capture / HDR / anti-cheat behavior verified
 - [ ] Physical Windows 10 and mixed-DPI monitor smoke checks
 

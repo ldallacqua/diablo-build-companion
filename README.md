@@ -10,7 +10,7 @@ Version **0.1.0 — MVP / prerelease**. This is working software with tested ori
 
 ## Install on Windows
 
-Download the x64 NSIS installer or portable executable from [Releases](https://github.com/ldallacqua/diablo-build-companion/releases). The installer runs per user without administrator privileges. Run the portable file directly for a temporary extraction; personal settings still persist in `%LOCALAPPDATA%/DiabloBuildCompanion/`. The English OCR model is bundled, so no first-run download/account is needed. Builds are unsigned; Windows may display an unknown-publisher/SmartScreen notice. Only run packages you trust. Uninstall removes the app while retaining personal data; use Settings → Clear Local Data first if you want it removed.
+Download the x64 NSIS installer or portable executable from [v0.1.0](https://github.com/ldallacqua/diablo-build-companion/releases/tag/v0.1.0). The installer runs per user without administrator privileges. Run the portable file directly for a temporary extraction; personal settings still persist in `%LOCALAPPDATA%/DiabloBuildCompanion/`. The English OCR model is bundled, so no first-run download/account is needed. Builds are unsigned; Windows may display an unknown-publisher/SmartScreen notice. Only run packages you trust. Uninstall removes the app while retaining personal data; use Settings → Clear Local Data first if you want it removed.
 
 Windows 11 x64 is the validated target. Windows 10 x64 compatibility is intended but has not been physically tested.
 
