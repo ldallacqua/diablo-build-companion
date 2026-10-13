@@ -1,0 +1,9 @@
+pnpm-lock.yaml
+node_modules
+dist
+dist-host
+release
+test-results
+playwright-report
+resources/ocr
+tests/visual

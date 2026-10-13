@@ -1,0 +1,7 @@
+packages:
+  - .
+nodeLinker: hoisted
+allowBuilds:
+  esbuild: true
+  tesseract.js: true
+  electron-winstaller: false

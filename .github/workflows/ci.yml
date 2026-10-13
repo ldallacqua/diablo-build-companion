@@ -1,0 +1,48 @@
+name: Windows quality and packaging
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec install-electron
+      - run: pnpm ocr:prepare
+      - run: pnpm lint
+      - run: pnpm format:check
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm assets:check
+      - run: pnpm test:e2e
+      - run: pnpm package:win
+      - name: Validate packaged application
+        shell: pwsh
+        run: |
+          $env:SANCTUM_PACKAGED_EXE = (Resolve-Path 'release/win-unpacked/Sanctum.exe').Path
+          pnpm exec playwright test tests/e2e/flow.spec.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-validation
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Sanctum-0.1.0-windows-x64
+          path: release/*.exe
+          retention-days: 14

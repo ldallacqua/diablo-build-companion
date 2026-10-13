@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "files": [
+    {
+      "path": "public/fixture-tooltip.png",
+      "source": "Original programmatic Sanctum artwork/tooltip fixture",
+      "license": "MIT",
+      "sha256": "9c815c87bc97d92441cfc4e137daf7f2a244169725da3ca4b658378a1c698017"
+    },
+    {
+      "path": "public/hero.png",
+      "source": "Original AI-assisted gothic matte painting, built-in imagegen, 2026-10-13",
+      "license": "Project generated-art grant (see docs/ASSETS.md)",
+      "sha256": "1e9864dae08fd22a3ab4d67e73d447ff14ab0d92c2cb9381691e4adbaa546f65"
+    },
+    {
+      "path": "resources/icon.ico",
+      "source": "Original programmatic Sanctum artwork/tooltip fixture",
+      "license": "MIT",
+      "sha256": "c761bd80121230a06736f4795001307a5e387f378f855219ce6c14e9fc0d7680"
+    },
+    {
+      "path": "resources/icon.png",
+      "source": "Original programmatic Sanctum artwork/tooltip fixture",
+      "license": "MIT",
+      "sha256": "68e5c8602af746a046382a2a99b954d0ed38bb97ee0efb288f03a72ddd14ac1b"
+    },
+    {
+      "path": "tests/fixtures/tooltip-small.png",
+      "source": "Original programmatic Sanctum artwork/tooltip fixture",
+      "license": "MIT",
+      "sha256": "769f8f3c55c89d9b70c5bc2109d99ce7f96372c56b1a08aab0704126cc9edcd2"
+    },
+    {
+      "path": "tests/fixtures/tooltip.png",
+      "source": "Original programmatic Sanctum artwork/tooltip fixture",
+      "license": "MIT",
+      "sha256": "9c815c87bc97d92441cfc4e137daf7f2a244169725da3ca4b658378a1c698017"
+    },
+    {
+      "path": "tests/visual/visual.spec.ts/advisor.png",
+      "source": "Original Sanctum application screenshot baseline",
+      "license": "MIT",
+      "sha256": "18de2927c205c807d62e4c493cec0b76bca5eaba28b4ab1392b87fc589551f21"
+    },
+    {
+      "path": "tests/visual/visual.spec.ts/dashboard.png",
+      "source": "Original Sanctum application screenshot baseline",
+      "license": "MIT",
+      "sha256": "d9ef5afdd006de085b151b6c237d88e138cb5486cf812d3de874de4888bb66dd"
+    },
+    {
+      "path": "tests/visual/visual.spec.ts/overlay.png",
+      "source": "Original Sanctum application screenshot baseline",
+      "license": "MIT",
+      "sha256": "147dc81c6c7ae36753c13a1d152540a173468bbad81a23654e67fae24684f4ff"
+    },
+    {
+      "path": "tests/visual/visual.spec.ts/paragon.png",
+      "source": "Original Sanctum application screenshot baseline",
+      "license": "MIT",
+      "sha256": "b0d7fd266b5588a846d8078eaa29ad3317e8099d03b71ca13ac4aa8afd6a533e"
+    },
+    {
+      "path": "tests/visual/visual.spec.ts/settings.png",
+      "source": "Original Sanctum application screenshot baseline",
+      "license": "MIT",
+      "sha256": "40b4b65065a3f7ca18b314708e0f7671509d867f99f97c6450e57063c419b409"
+    },
+    {
+      "path": "tests/visual/visual.spec.ts/skills.png",
+      "source": "Original Sanctum application screenshot baseline",
+      "license": "MIT",
+      "sha256": "2eb7cfa5a17cbdaa5e19d426af7f13385b4d2bce04acf01a0b83d4769a25f8c8"
+    },
+    {
+      "path": "tests/visual/visual.spec.ts/transition.png",
+      "source": "Original Sanctum application screenshot baseline",
+      "license": "MIT",
+      "sha256": "716a11d00a3aa54de8521cf848ed14f68898b85088c57c14c311ebc83ff9744b"
+    }
+  ]
+}
