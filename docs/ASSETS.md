@@ -8,7 +8,7 @@ The public application contains only original Sanctum resources and licensed sof
 - `resources/icon.png` / `.ico` and the code-native Logo: original geometric Sanctum mark, MIT.
 - `tests/fixtures/tooltip*.png`, `public/fixture-tooltip.png`: programmatically drawn fictional tooltip text, MIT. Stormweaver, Ring of the Tempest and example priorities are synthetic fixtures, not Maxroll imports.
 - `tests/visual/`: screenshots of this original application and its synthetic data. They contain no private desktop/game content.
-- Lucide icon components: ISC; system fonts are referenced, not redistributed.
+- Lucide icon components: ISC. Inter variable font by the Inter Project Authors is bundled unchanged under SIL Open Font License 1.1, pinned to upstream commit `353b61b9f4430d5f420d56605a6e7993e0941470`. Full copyright/license is in `public/fonts/OFL-Inter.txt`; SHA-256 and source are in the asset manifest. Georgia/system fallback fonts are referenced, not redistributed.
 - Tesseract.js, core and trained language data: Apache-2.0. OCR model provenance/checksum is in resources/ocr/model-lock.json. Electron/Chromium licenses accompany the runtime; other dependency notices are retained.
 
 Final hero prompt (built-in mode):

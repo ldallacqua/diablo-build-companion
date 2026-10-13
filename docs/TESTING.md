@@ -6,6 +6,7 @@ Validation date: 2026-10-13. Local target: Windows 11 x64 (build 26200), Electro
 
 - 30 unit/integration tests passed: exact item/affix parsing, aliases, greater markers, preserved crafting text, low confidence, active/future verdicts, incomplete/unique discard protection, unit-aware equipped comparisons, skill/milestone progression, transition conditions/actions, partial JSON normalization, matching-class imports, URL validation, migration, atomic storage, corrupt-file handling, fallback resolution and actual OCR of two original PNG fixtures.
 - 5 Windows Playwright/Electron tests passed: onboarding → OCR upload → STASH FOR ENDGAME → skill progress → accepted transition → KEEP → restart/persistence; native topmost/transparent/opacity overlay plus click-through recovery; real private raster-cache write/read/checksum/missing-file handling; seven screenshot views; logical 1080p, 1440p, 4K at 200% zoom and compact desktop containment.
+- 3 packaged Windows tests passed against both the unpacked distribution and a real per-user NSIS installation: OCR/progression/restart flow, native overlay and private asset cache. Silent install and uninstall each returned exit code 0; uninstall removed the application executable and temporary installation directory.
 - Type checking, lint and formatting checks are required before every release. Licensing/hash guards cover all committed raster/vector/font assets and forbid known archive/private-resource patterns.
 - The main source workflow and packaged-app validation commands are in `.github/workflows/ci.yml`. Remote run links/status are recorded in RELEASE.md after completion, never inferred from local checks.
 
@@ -19,7 +20,7 @@ An initial native test exposed blank hardware-rendered surfaces; software render
 
 ## Performance
 
-See BENCHMARK.json for raw samples. The original 720 × 540 image passed through actual desktop image decoding/resizing, Tesseract worker and IPC. The first OCR took about 335 ms, subsequent OCR samples about 176–184 ms; upload-to-result about 198–374 ms. These are synthetic-tooltip measurements on one PC, not a gameplay latency guarantee. Working-set sums include shared Electron pages and transient OCR allocations and are not private-memory estimates. The OCR worker now terminates after 15 seconds without another request to release its WASM memory, reinitializing on the next scan. No continuous recording runs.
+See BENCHMARK.json for raw samples. The original 720 × 540 image passed through actual desktop image decoding/resizing, Tesseract worker and IPC. The first OCR took 320 ms, subsequent OCR samples 178–187 ms; upload-to-result took 200–359 ms. These are synthetic-tooltip measurements on one PC, not a gameplay latency guarantee. Total measured private memory was 329 MB after scanning and 268 MB after the OCR worker was released; Electron is a material memory cost. Working-set sums include shared Electron pages and transient OCR allocations and are not private-memory estimates. The OCR worker terminates after 15 seconds without another request to release its WASM memory, reinitializing on the next scan. No continuous recording runs.
 
 ## Commands
 
@@ -37,6 +38,8 @@ pnpm exec playwright test tests/e2e/flow.spec.ts
 ```
 
 Packaged validation exercises real shipped OCR paths/resources, not source module mocks. Installer installation/uninstallation and portable startup are separately noted in RELEASE.md. Do not label them tested until performed.
+
+`node scripts/portable-smoke.mjs` passed against the actual portable wrapper: extraction, startup, real bundled OCR, STASH verdict, clean process exit and persisted restart. It uses a temporary loopback renderer debugging port because the NSIS wrapper does not forward the Node inspector stream expected by Playwright's Electron launcher. That earlier launcher attempt timed out and is not counted as a pass. Test data is isolated and removed.
 
 ## Remaining manual Windows/game checks
 

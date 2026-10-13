@@ -12,13 +12,20 @@
   --red: #b66d66;
   --amber: #dbb780;
   --radius: 10px;
-  --font: 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif;
+  --font: 'Inter', 'Segoe UI', system-ui, sans-serif;
   font-family: var(--font);
   color: var(--text);
   font-synthesis: none;
   font-size: 14px;
   line-height: 1.5;
   background: var(--bg);
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/InterVariable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
 }
 * {
   box-sizing: border-box;
