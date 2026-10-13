@@ -19,28 +19,54 @@ const port = server.address().port;
 await new Promise((resolve) => server.close(resolve));
 let child;
 let browser;
+let diagnostics = '';
+let launchError;
 
 async function start() {
+  diagnostics = '';
+  launchError = undefined;
   child = spawn(executable, [`--remote-debugging-port=${port}`], {
     env: { ...process.env, SANCTUM_TEST_DATA: data },
     windowsHide: true,
-    stdio: 'ignore',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  const record = (bytes) => {
+    diagnostics = (diagnostics + bytes.toString('utf8')).slice(-32000);
+  };
+  child.stdout.on('data', record);
+  child.stderr.on('data', record);
+  child.on('error', (error) => {
+    launchError = error;
   });
   const endpoint = `http://127.0.0.1:${port}`;
-  const deadline = Date.now() + 45000;
+  const started = Date.now();
+  // Cold NSIS extraction plus Windows scanning can exceed 45 seconds on hosted
+  // runners. Keep a bound, and fail immediately if the actual wrapper exits.
+  const deadline = started + (process.env.CI ? 180000 : 90000);
   while (true) {
+    if (launchError) throw launchError;
+    if (child.exitCode !== null || child.signalCode !== null)
+      throw new Error(
+        `Portable wrapper exited during startup: ${child.exitCode ?? child.signalCode}\n${diagnostics}`,
+      );
     try {
-      const response = await fetch(`${endpoint}/json/version`);
+      const response = await fetch(`${endpoint}/json/version`, {
+        signal: AbortSignal.timeout(1500),
+      });
       if (response.ok) break;
     } catch {
       // Wait for the portable launcher to extract and start Electron.
     }
-    if (Date.now() > deadline) throw new Error('Portable renderer did not start within 45 s.');
+    if (Date.now() > deadline)
+      throw new Error(
+        `Portable renderer did not start after ${Math.round((Date.now() - started) / 1000)} s. Wrapper PID: ${child.pid}.\n${diagnostics}`,
+      );
     await new Promise((resolve) => setTimeout(resolve, 250));
   }
   browser = await chromium.connectOverCDP(endpoint);
   const context = browser.contexts()[0];
   await expect.poll(() => context.pages().length).toBe(1);
+  console.log(`Portable renderer ready after ${Math.round((Date.now() - started) / 1000)} s.`);
   return context.pages()[0];
 }
 
@@ -83,6 +109,23 @@ try {
   console.log(
     'Portable wrapper PASS: extraction, startup, local OCR, verdict, clean exit and persisted restart.',
   );
+} catch (error) {
+  await fs.writeFile(
+    path.join(results, 'portable-startup-diagnostics.json'),
+    JSON.stringify(
+      {
+        version,
+        message: String(error),
+        pid: child?.pid,
+        exitCode: child?.exitCode,
+        signalCode: child?.signalCode,
+        diagnostics,
+      },
+      null,
+      2,
+    ),
+  );
+  throw error;
 } finally {
   await browser?.close().catch(() => {});
   if (child?.exitCode === null) child.kill();
