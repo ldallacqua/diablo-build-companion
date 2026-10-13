@@ -11,8 +11,8 @@
 - [x] Manual skills, Paragon milestones and deliberate transition state machine
 - [x] Private raster asset importer, semantic resolver and checksum fallback
 - [x] Original fixture tests, E2E workflow and reviewed visual comparisons
-- [ ] Final packaged Windows app verified
-- [ ] Public repository and remote CI verified
+- [x] Final packaged Windows app verified
+- [x] Public repository and remote CI verified
 - [ ] Tested release artifacts published
 - [ ] Real Diablo IV borderless capture / HDR / anti-cheat behavior verified
 - [ ] Physical Windows 10 and mixed-DPI monitor smoke checks
