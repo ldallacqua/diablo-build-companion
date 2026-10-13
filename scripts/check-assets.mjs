@@ -17,7 +17,7 @@ try {
 const errors = [];
 for (const file of files) {
   if (
-    /(?:^|\/)(?:private-assets|game-assets|screenshots)\/|\.(?:casc|mpq|bnk|blp|tex|traineddata)$/i.test(
+    /(?:^|\/)(?:private-assets|game-assets|extracted-assets|private-previews|screenshots)\/|(?:^|\/)game-(?:library|asset-selection[^/]*)\.json$|-(?:meta|payload|child)\.dat$|\.(?:casc|mpq|bnk|blp|tex|traineddata)$/i.test(
       file,
     )
   )

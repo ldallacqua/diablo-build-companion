@@ -148,6 +148,7 @@ export const SettingsSchema = z.object({
     })
     .default({ x: 0, y: 0, width: 600, height: 850 }),
   language: z.enum(['en', 'pt-BR']).default('en'),
+  gameTheme: z.boolean().default(false),
 });
 export type Settings = z.infer<typeof SettingsSchema>;
 export const AssetSchema = z.object({
@@ -158,6 +159,12 @@ export const AssetSchema = z.object({
   checksum: z.string(),
   filename: z.string(),
   compatiblePatch: z.string().default('*'),
+  gameBuild: z.string().max(100).optional(),
+  resourceKey: z
+    .string()
+    .regex(/^\d+(\.\d+)?$/)
+    .optional(),
+  slice: z.array(z.number().int().nonnegative().max(32768)).length(4).optional(),
 });
 export type Asset = z.infer<typeof AssetSchema>;
 export const StateSchema = z.object({

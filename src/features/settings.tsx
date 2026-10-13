@@ -15,6 +15,7 @@ import { Badge, Button, Panel } from '../components/ui';
 import { exportJson } from './builds';
 import type { DisplayInfo } from '../shared/bridge';
 import { decodeState } from '../services/storage';
+import { GameAssetLibrary } from './gameAssets';
 export function Settings() {
   const backup = useRef<HTMLInputElement>(null);
   const { state, update, message } = useApp();
@@ -32,6 +33,9 @@ export function Settings() {
         .then(setDisplays)
         .catch((e) => message(String(e)));
   }, []);
+  useEffect(() => {
+    setDraft((s) => ({ ...s, gameTheme: state.settings.gameTheme }));
+  }, [state.settings.gameTheme]);
   const change = (key: keyof SettingsType, value: unknown) => {
     setDraft((s) => ({ ...s, [key]: value }));
     setSaved(false);
@@ -78,6 +82,7 @@ export function Settings() {
           {saved ? 'Settings saved' : 'Save settings'}
         </Button>
       </div>
+      <GameAssetLibrary />
       <div className="settings-grid">
         <Panel
           eyebrow="CAPTURE"
@@ -234,7 +239,7 @@ export function Settings() {
         >
           <p className="muted">
             Import PNG, JPEG or WebP images you are authorized to use. Game archive extraction is
-            unavailable.
+            available separately in the game asset library above.
           </p>
           <label>
             Semantic asset ID

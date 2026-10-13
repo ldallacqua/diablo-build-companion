@@ -1,7 +1,7 @@
 {
   "name": "diablo-build-companion",
   "productName": "Sanctum",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Local-first Diablo IV build companion, screenshot advisor and desktop overlay",
   "author": "Lucas Dallacqua",
   "license": "MIT",
@@ -33,12 +33,18 @@
     },
     "files": [
       "dist/**",
-      "dist-host/**",
+      "dist-host/main.cjs",
+      "dist-host/main.cjs.map",
+      "dist-host/preload.cjs",
+      "dist-host/preload.cjs.map",
+      "dist-host/extractor.cjs",
+      "dist-host/extractor.cjs.map",
       "resources/icon.ico",
       "package.json"
     ],
     "asarUnpack": [
-      "node_modules/**"
+      "node_modules/**",
+      "dist-host/extractor.cjs"
     ],
     "extraResources": [
       {
@@ -48,6 +54,10 @@
       {
         "from": "resources/THIRD_PARTY_NOTICES.md",
         "to": "THIRD_PARTY_NOTICES.md"
+      },
+      {
+        "from": "resources/extraction-notices.txt",
+        "to": "extraction-notices.txt"
       },
       {
         "from": "LICENSE",

@@ -17,3 +17,5 @@ The English model source and SHA-256 are locked in ocr/model-lock.json. It is do
 Inter variable font is bundled under SIL Open Font License 1.1, from https://github.com/rsms/inter at commit 353b61b9f4430d5f420d56605a6e7993e0941470. Its full copyright and OFL text are included at dist/fonts/OFL-Inter.txt inside the app. The font's source and SHA-256 are in asset-licenses.json.
 
 Original generated art has the project grant described in docs/ASSETS.md. Diablo IV and Maxroll assets are not bundled.
+
+Steam/texture format references: WiseOwl.Casc (Wise Owl Software), TACTLib (overtools), and d4-asset-extractor (Game Strategy HQ), MIT. Full copyright/license texts are included in extraction-notices.txt. Pinned source references and research boundaries are documented in docs/EXTRACTION.md. The proprietary artwork read by the optional extractor is not included and is not licensed under the project MIT grant.

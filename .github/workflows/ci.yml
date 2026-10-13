@@ -32,7 +32,7 @@ jobs:
         shell: pwsh
         run: |
           $env:SANCTUM_PACKAGED_EXE = (Resolve-Path 'release/win-unpacked/Sanctum.exe').Path
-          pnpm exec playwright test tests/e2e/flow.spec.ts
+          pnpm exec playwright test tests/e2e/flow.spec.ts tests/e2e/gameAssets.spec.ts
       - name: Validate portable launcher and restart
         run: node scripts/portable-smoke.mjs
       - uses: actions/upload-artifact@v4
@@ -45,6 +45,6 @@ jobs:
           retention-days: 14
       - uses: actions/upload-artifact@v4
         with:
-          name: Sanctum-0.1.0-windows-x64
+          name: Sanctum-0.2.0-windows-x64
           path: release/*.exe
           retention-days: 14

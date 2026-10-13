@@ -12,3 +12,15 @@ screenshots/
 .env*
 !.env.example
 state*.json
+game-assets/
+extracted-assets/
+private-previews/
+game-library.json
+game-asset-selection*.json
+*.casc
+*.mpq
+*.tex
+*.blp
+*-payload.dat
+*-meta.dat
+*-child.dat

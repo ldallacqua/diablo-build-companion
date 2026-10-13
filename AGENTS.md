@@ -1,6 +1,6 @@
 # Sanctum / Diablo IV Companion
 
-Sanctum is a Windows, local-first two-build item advisor. Its core flow is user-triggered screen capture or image upload → local OCR → exact parser → deterministic explanations → optional overlay. Treat v0.1.0 as a tested MVP with limited tooltip coverage, not an authoritative seasonal planner. The original examples are deliberately synthetic.
+Sanctum is a Windows, local-first two-build item advisor. Its core flow is user-triggered screen capture or image upload → local OCR → exact parser → deterministic explanations → optional overlay. Treat v0.2.0 as a tested MVP with limited tooltip coverage and optional private Steam artwork, not an authoritative seasonal planner. The original examples are deliberately synthetic.
 
 ## Workflow and commands
 
@@ -39,7 +39,7 @@ Use the charcoal, restrained gold/bronze design tokens. Respect surface hierarch
 
 ## Security, assets and privacy
 
-Never read game memory, inject DLLs, automate game actions, intercept packets, bypass DRM, extract game archives or claim Blizzard approval. Only user-triggered screen snapshots and manual state are allowed. Screenshot processing stays in memory; only the latest extracted item text is persisted. There are no uploads, telemetry or cloud accounts. Native links must retain strict host/scheme allowlists. Don't weaken CSP, sandbox, context isolation, IPC sender checks or size bounds to solve a test failure.
+Never read game memory, inject DLLs, automate game actions, intercept packets, bypass DRM or claim Blizzard approval. The project owner's explicit 2026-10-13 request authorizes read-only extraction of unencrypted UI resources from their installed Steam copy, with all extracted pixels kept outside Git and releases. This supersedes the previous archive-extraction exclusion. See docs/EXTRACTION.md. Do not add keys, protected-content bypasses, downloads or writes into the installation. User-triggered screen snapshots and manual game state remain the only gameplay integration. Screenshot processing stays in memory; only the latest extracted item text is persisted. There are no uploads, telemetry or cloud accounts. Native links must retain strict host/scheme allowlists. Don't weaken CSP, sandbox, context isolation, IPC sender checks or size bounds to solve a test failure.
 
 Imported assets belong in the app's private `%LOCALAPPDATA%/DiabloBuildCompanion/assets` cache, never the repository or release. Re-encode raster imports to PNG and validate checksum filenames on read. Missing/incompatible/corrupt assets use original generic icons. Add distributable original resources to resources/asset-licenses.json; `scripts/update-asset-manifest.mjs` calculates hashes but does not establish rights. Record all third-party licenses. No Blizzard images, proprietary guide prose or private desktop screenshots may be committed.
 

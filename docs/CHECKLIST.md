@@ -10,6 +10,8 @@
 - [x] Explainable active/future recommendations, equipped snapshot comparisons
 - [x] Manual skills, Paragon milestones and deliberate transition state machine
 - [x] Private raster asset importer, semantic resolver and checksum fallback
+- [x] Read-only Steam archive worker, original sprite extraction and private asset browser
+- [x] Installed-game theme using extracted borders, corners, buttons and icons in desktop/overlay
 - [x] Original fixture tests, E2E workflow and reviewed visual comparisons
 - [x] Final packaged Windows app verified
 - [x] Public repository and remote CI verified
@@ -17,6 +19,6 @@
 - [ ] Real Diablo IV borderless capture / HDR / anti-cheat behavior verified
 - [ ] Physical Windows 10 and mixed-DPI monitor smoke checks
 
-Documented fallbacks: Maxroll reference + manual/JSON data (no automated scraping); standalone companion + screenshot upload; Paragon milestones (no generated routes); authorized user-image import (no game archive extraction).
+Documented fallbacks: Maxroll reference + manual/JSON data (no automated scraping); standalone companion + screenshot upload; Paragon milestones (no generated routes); ordinary private image imports and read-only unencrypted Steam UI extraction (no Battle.net support or protected-content bypass).
 
 Scope remaining beyond MVP: authoritative seasonal database, natural-language power detection across tooltip variants, full pt-BR translation/OCR, signing, safe updater and verified route geometry. A synthetic demonstration is not a seasonal guide or evidence of publisher approval.

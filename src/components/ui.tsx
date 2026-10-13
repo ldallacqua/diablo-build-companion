@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../app/store';
 import { fallbackAsset, resolveAsset } from '../services/assets';
+import { FrameOrnaments } from './gameTheme';
 export function FocusScope({
   children,
   className,
@@ -116,6 +117,7 @@ export function Panel({
 }) {
   return (
     <section className={`panel ${className}`}>
+      <FrameOrnaments />
       {(title || eyebrow) && (
         <div className="panel-head">
           <div>

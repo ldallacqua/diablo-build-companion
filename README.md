@@ -6,11 +6,11 @@ A local-first Windows build companion with screenshot OCR, explainable two-build
 
 ![Item advisor](tests/visual/visual.spec.ts/advisor.png)
 
-Version **0.1.0 — MVP / prerelease**. This is working software with tested original fixtures, not a complete seasonal planner or an officially approved game integration.
+Version **0.2.0 — MVP / prerelease**, with private Steam UI extraction and an optional authentic-asset theme. This is working software with tested original fixtures, not a complete seasonal planner or an officially approved game integration.
 
 ## Install on Windows
 
-Download the x64 NSIS installer or portable executable from [v0.1.0](https://github.com/ldallacqua/diablo-build-companion/releases/tag/v0.1.0). The installer runs per user without administrator privileges. Run the portable file directly for a temporary extraction; personal settings still persist in `%LOCALAPPDATA%/DiabloBuildCompanion/`. The English OCR model is bundled, so no first-run download/account is needed. Builds are unsigned; Windows may display an unknown-publisher/SmartScreen notice. Only run packages you trust. Uninstall removes the app while retaining personal data; use Settings → Clear Local Data first if you want it removed.
+Download the x64 NSIS installer or portable executable from [releases](https://github.com/ldallacqua/diablo-build-companion/releases). The installer runs per user without administrator privileges. Run the portable file directly for a temporary extraction; personal settings still persist in `%LOCALAPPDATA%/DiabloBuildCompanion/`. The English OCR model is bundled, so no first-run download/account is needed. Builds are unsigned; Windows may display an unknown-publisher/SmartScreen notice. Only run packages you trust. Uninstall removes the app while retaining personal data; use Settings → Clear Local Data first if you want it removed.
 
 Windows 11 x64 is the validated target. Windows 10 x64 compatibility is intended but has not been physically tested.
 
@@ -29,7 +29,9 @@ Windows 11 x64 is the validated target. Windows 10 x64 compatibility is intended
 
 Open overlay from the sidebar. Default toggle shortcut: **Ctrl+Alt+Shift+O**. Drag its header; choose compact mode, opacity and click-through in Settings. The hide shortcut works when click-through prevents interaction. Coordinates restore only to connected displays. It is a separate topmost window, intended for borderless desktop use. Actual Diablo IV and exclusive-fullscreen/anti-cheat compatibility remain unverified; use standalone mode and screenshot upload when appropriate.
 
-Optional images: Settings → Personal Asset Library. Supply an asset ID, source and permission/license, then choose an image you may use. It stays in the private local cache. Missing assets use the original icons. No game-file/archive extraction is implemented. See [ASSETS](docs/ASSETS.md) and [COMPLIANCE](docs/COMPLIANCE.md).
+For installed-game artwork: **Settings → Diablo IV asset library → Choose game folder → Extract core UI pack → Use Diablo IV theme**. Select your Steam installation, such as `C:\Steam\steamapps\common\Diablo IV`. The private browser lets you assign original sprites to frame, button, class, skill and item roles. The theme applies to the desktop and overlay. All extracted pixels stay in the local cache and are excluded from GitHub and installers. Steam static archives and BC1/BC3/RGBA8/R8 textures are supported; Battle.net, encrypted entries and other codecs are not. See [EXTRACTION](docs/EXTRACTION.md).
+
+Ordinary image import remains available through Settings → Personal Asset Library with explicit provenance. Missing assets use the original icons. See [ASSETS](docs/ASSETS.md) and [COMPLIANCE](docs/COMPLIANCE.md).
 
 ## Development
 
@@ -46,7 +48,7 @@ pnpm start
 
 ## Limits and next steps
 
-Conservative exact-label OCR parsing, English tooltip recognition, manual character/progression synchronization, milestone Paragon guidance, manual/JSON Maxroll fallback and navigation-only Portuguese preview. There is no damage simulator, authoritative seasonal data, automatic tooltip detection, game archive importer, cloud service or telemetry. Screenshot bytes are transient; the latest extracted item text persists. Export your workspace before clearing data.
+Conservative exact-label OCR parsing, English tooltip recognition, manual character/progression synchronization, milestone Paragon guidance, manual/JSON Maxroll fallback and navigation-only Portuguese preview. There is no damage simulator, authoritative seasonal data, automatic tooltip detection, Battle.net archive importer, cloud service or telemetry. Screenshot bytes are transient; the latest extracted item text persists. Export your workspace before clearing data.
 
 Roadmap: (1) validate capture/OCR in actual borderless Diablo IV across GPUs/HDR/mixed DPI; (2) expand rights-cleared English/Portuguese tooltip fixtures and power recognition; (3) obtain a permitted Maxroll import interface; (4) sourced seasonal schema packs and verified routes; (5) full localization, signing and optional safe updates. Preserve local deterministic decisions and game/publisher restrictions throughout.
 

@@ -20,6 +20,7 @@ import { Settings } from '../features/settings';
 import { Overlay } from '../features/overlay';
 import { withExamples } from '../data/examples';
 import { messages, type Page } from '../shared/i18n';
+import { GameTheme } from '../components/gameTheme';
 const pages: { id: Page; icon: typeof ScanLine }[] = [
   { id: 'dashboard', icon: LayoutDashboard },
   { id: 'advisor', icon: ScanLine },
@@ -43,11 +44,17 @@ function Workspace() {
     document.documentElement.classList.add('overlay-html');
     document.title = 'Sanctum Overlay';
     document.body.classList.add('overlay-body');
-    return <Overlay />;
+    return (
+      <>
+        <GameTheme />
+        <Overlay />
+      </>
+    );
   }
   const labels = messages[state.settings.language];
   return (
     <div className="app-shell">
+      <GameTheme />
       <aside className="sidebar">
         <div className="brand">
           <Logo />
@@ -94,7 +101,7 @@ function Workspace() {
               </small>
             </div>
           </div>
-          <small className="version">v0.1.0 · Independent companion</small>
+          <small className="version">v0.2.0 · Independent companion</small>
         </div>
       </aside>
       <div className="workspace">

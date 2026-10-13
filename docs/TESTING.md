@@ -1,12 +1,12 @@
 # Validation record
 
-Validation date: 2026-10-13. Local target: Windows 11 x64 (build 26200), Electron 44.7.0, Node 24, React 19, TypeScript 6.0.3. No Diablo IV instance was required or used for the tests below. Results must not be interpreted as publisher/anti-cheat approval.
+Validation date: 2026-10-13. Local target: Windows 11 x64 (build 26200), Electron 44.7.0, Node 24, React 19, TypeScript 6.0.3. Automated fixtures use no game installation. A separate private extraction check reads the owner's installed Steam files without running or accessing a game process. Results must not be interpreted as publisher/anti-cheat approval.
 
 ## Automated checks
 
-- 30 unit/integration tests passed: exact item/affix parsing, aliases, greater markers, preserved crafting text, low confidence, active/future verdicts, incomplete/unique discard protection, unit-aware equipped comparisons, skill/milestone progression, transition conditions/actions, partial JSON normalization, matching-class imports, URL validation, migration, atomic storage, corrupt-file handling, fallback resolution and actual OCR of two original PNG fixtures.
-- 5 Windows Playwright/Electron tests passed: onboarding → OCR upload → STASH FOR ENDGAME → skill progress → accepted transition → KEEP → restart/persistence; native topmost/transparent/opacity overlay plus click-through recovery; real private raster-cache write/read/checksum/missing-file handling; seven screenshot views; logical 1080p, 1440p, 4K at 200% zoom and compact desktop containment.
-- 3 packaged Windows tests passed against both the unpacked distribution and a real per-user NSIS installation: OCR/progression/restart flow, native overlay and private asset cache. Silent install and uninstall each returned exit code 0; uninstall removed the application executable and temporary installation directory.
+- 35 unit/integration tests passed: exact item/affix parsing, aliases, greater markers, preserved crafting text, low confidence, active/future verdicts, incomplete/unique discard protection, unit-aware equipped comparisons, skill/milestone progression, transition conditions/actions, partial JSON normalization, matching-class imports, URL validation, migration, atomic storage, corrupt-file handling, fallback resolution and actual OCR of two original PNG fixtures. Added original synthetic Steam TVFS/texture archives, source preservation/cache confinement, BLTE N/Z and encrypted rejection, invalid manifests/layouts, BC3 alpha/padded pitch and transparent-centred frame assembly.
+- 6 Windows Playwright/Electron tests passed: onboarding → OCR upload → STASH FOR ENDGAME → skill progress → accepted transition → KEEP → restart/persistence; native topmost/transparent/opacity overlay plus click-through recovery; real private raster-cache write/read/checksum/missing-file handling; extractor-worker indexing/conversion, sprite browsing, semantic assignment, optional theme persistence/disable; seven original-theme screenshot views; logical 1080p, 1440p, 4K at 200% zoom and compact desktop containment.
+- 4 packaged Windows tests passed against both the v0.2 unpacked distribution and a real NSIS installation: OCR/progression/restart flow, native overlay, private image cache and real extraction worker with original miniature archives. The installer and uninstaller returned 0; the test executable was removed. The actual portable wrapper passed startup, bundled OCR, verdict, clean exit and persistence. Historical v0.1 results remain recorded in RELEASE.md.
 - Type checking, lint and formatting checks are required before every release. Licensing/hash guards cover all committed raster/vector/font assets and forbid known archive/private-resource patterns.
 - The main source workflow and packaged-app validation commands are in `.github/workflows/ci.yml`. Remote run links/status are recorded in RELEASE.md after completion, never inferred from local checks.
 
@@ -34,7 +34,7 @@ pnpm assets:check
 pnpm test:e2e
 pnpm package:win
 $env:SANCTUM_PACKAGED_EXE = (Resolve-Path 'release/win-unpacked/Sanctum.exe').Path
-pnpm exec playwright test tests/e2e/flow.spec.ts
+pnpm exec playwright test tests/e2e/flow.spec.ts tests/e2e/gameAssets.spec.ts
 ```
 
 Packaged validation exercises real shipped OCR paths/resources, not source module mocks. Installer installation/uninstallation and portable startup are separately noted in RELEASE.md. Do not label them tested until performed.
@@ -42,6 +42,10 @@ Packaged validation exercises real shipped OCR paths/resources, not source modul
 `node scripts/portable-smoke.mjs` passed against the actual portable wrapper: extraction, startup, real bundled OCR, STASH verdict, clean process exit and persisted restart. It uses a temporary loopback renderer debugging port because the NSIS wrapper does not forward the Node inspector stream expected by Playwright's Electron launcher. That earlier launcher attempt timed out and is not counted as a pass. Test data is isolated and removed.
 
 ## Remaining manual Windows/game checks
+
+Separate local asset check: `scripts/game-assets-smoke.mjs` passed against both the source app and v0.2 packaged app with Steam build `24505340-24505359`. It exercised real installation indexing, core extraction, private sprite reads, theme application and the overlay. It produced 1,311 private resources; one unavailable skill-tree archive was reported as skipped. All real-art previews remained outside Git. An ASAR content inspection found no private index, extracted hash-named PNGs or scratch probe, and verified the unpacked extractor and bundled MIT notices. This is distinct from a live-game capture test.
+
+For a private repeat, set `SANCTUM_PRIVATE_CACHE` and `SANCTUM_PRIVATE_PREVIEWS` outside the repository, optionally `SANCTUM_GAME_INSTALLATION` to re-index/extract and `SANCTUM_PACKAGED_EXE` to test the distribution. Never upload these screenshots or cache files as CI artifacts. CI runs only original synthetic archives and original fallback visuals.
 
 1. In a permitted environment, open Diablo IV in borderless mode and compare native captured pixels with the intended tooltip. Try English tooltips across rarity, power, affix, tempering, greater-affix and masterworking variants. Verify uncertain lines require review.
 2. Try real 100/125/150/200% scaling, HDR/SDR and mixed monitors with negative desktop origins. Disconnect the selected display and ensure the capture error is clear; restore the overlay to a connected work area.

@@ -47,13 +47,13 @@
       "path": "tests/visual/visual.spec.ts/advisor.png",
       "source": "Original Sanctum application screenshot baseline",
       "license": "MIT",
-      "sha256": "1d0f84941e8a15972f79460f25c529ed8262921b16e968a2ef24c88ed5e1390f"
+      "sha256": "55c4c6461bc9a4def0fc6c38d02feb3082e64bfba04986090a38dd41e8b74ccf"
     },
     {
       "path": "tests/visual/visual.spec.ts/dashboard.png",
       "source": "Original Sanctum application screenshot baseline",
       "license": "MIT",
-      "sha256": "801e5108b8e29b4fafbcace5ea3909f93108063d820ffe35dc75c4c5b9c95702"
+      "sha256": "4f59384af9ccb3921e186df684163393f03dfae111dab9331fe5e76ca07fb812"
     },
     {
       "path": "tests/visual/visual.spec.ts/overlay.png",
@@ -65,25 +65,25 @@
       "path": "tests/visual/visual.spec.ts/paragon.png",
       "source": "Original Sanctum application screenshot baseline",
       "license": "MIT",
-      "sha256": "56a82e615e266e21d24a2f2de378c120e79eb7cbf1b388cfab2d1d316125addc"
+      "sha256": "b386cbd298723add135b5aeb3f141f9272f2a445b3f39d2e5b65174204339f9d"
     },
     {
       "path": "tests/visual/visual.spec.ts/settings.png",
       "source": "Original Sanctum application screenshot baseline",
       "license": "MIT",
-      "sha256": "6576a1e608047b758dd966e481d4cdf542fa2547ae3b82887e34059016b72cf4"
+      "sha256": "78aa4ca847c33b60ea05db843d3539c6044641242779df3c5d2a27a5c147e33f"
     },
     {
       "path": "tests/visual/visual.spec.ts/skills.png",
       "source": "Original Sanctum application screenshot baseline",
       "license": "MIT",
-      "sha256": "7ceb83d20510aa09a6655a1b8ec245fec2db6487ec04b521b6aaef73ebb08fab"
+      "sha256": "c8fc12c8329317aa02716f470f3010d2e3640faf9a9e55e43d1551d4dc7bb8ab"
     },
     {
       "path": "tests/visual/visual.spec.ts/transition.png",
       "source": "Original Sanctum application screenshot baseline",
       "license": "MIT",
-      "sha256": "f978cc4740045c8e9e5b7378a19e12b775e1d15b652a7b8979f0ec0d8ade43e2"
+      "sha256": "dad734ff15de091b2adb324e46b6e8dadd6894f0a749cab3b6307e80b692cdda"
     }
   ]
 }

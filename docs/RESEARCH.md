@@ -39,7 +39,7 @@ Attempts to open `https://maxroll.gg/robots.txt`, the Chain Lightning leveling g
 
 The [Blizzard EULA](https://www.blizzard.com/en-us/legal/simple/bfbbb648-bcc6-4b78-a5c7-e2fe20c135df/blizzard-end-user-license-agreement) has broad restrictions on unauthorized software, gameplay facilitation, data mining and platform modification. Screenshots and independent windows were not found to have an explicit Diablo IV-specific authorization in the material reviewed. We do not imply approval. COMPLIANCE.md records the remaining risk and standalone fallback.
 
-No authorized local Diablo IV archive-extraction API or redistribution permission was established. We did not investigate archive formats by reading installed game data or use extraction/reverse-engineering tools. Owning a copy is not treated as an asset license. Only original artwork, licensed dependencies and explicitly attributed user-provided raster imports are supported. Blizzard installation detection/archive import are excluded until permission and a supported mechanism exist.
+No official local archive-extraction API or redistribution permission was established. After the initial v0.1 release, the owner explicitly requested extraction of their installed Steam artwork with no game pixels published. We investigated static key layouts, TVFS, CoreTOC/combined texture metadata and mip payloads using MIT format references and the local installed build. The TypeScript worker reads unencrypted entries only and keeps SHA-addressed PNGs outside Git. Owning a copy is not treated as an asset license or publisher authorization. See [EXTRACTION.md](EXTRACTION.md) for pinned references, measured results and unsupported formats.
 
 ## Open questions
 
@@ -47,4 +47,4 @@ No authorized local Diablo IV archive-extraction API or redistribution permissio
 - A permitted Maxroll interface and a rights-cleared, patch-specific import contract.
 - Complete current affix dictionaries, natural power text and localized tooltip fixtures.
 - Real Diablo IV capture latency, low-contrast OCR, HDR and mixed-DPI/multi-monitor behavior.
-- Authentic asset access only if a supported, authorized mechanism becomes available.
+- Battle.net support, additional texture codecs and future-build format/handle compatibility; publisher confirmation remains unresolved.

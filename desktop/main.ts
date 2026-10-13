@@ -24,6 +24,7 @@ import {
 import { maxrollReference } from '../src/services/importers';
 import { persistState, readState } from './persistence';
 import { recognize, stopOcr } from './ocr';
+import { createGameAssets } from './gameAssets';
 
 app.setName('Sanctum');
 // Software rendering avoids transparent/blank native surfaces observed on the validation PC.
@@ -45,6 +46,13 @@ let state: AppState = freshState();
 let busy = false;
 let writeQueue: Promise<unknown> = Promise.resolve();
 let overlayBounds: Electron.Rectangle | undefined;
+const gameAssets = createGameAssets(
+  dataDirectory,
+  path.join(__dirname, 'extractor.cjs').replace('app.asar', 'app.asar.unpacked'),
+  (message) => {
+    if (main && !main.isDestroyed()) main.webContents.send('game:progress', message);
+  },
+);
 const languagePath = app.isPackaged
   ? path.join(process.resourcesPath, 'ocr')
   : path.join(root, 'resources', 'ocr');
@@ -373,24 +381,53 @@ app.whenReady().then(async () => {
     return { ...meta, checksum, filename };
   });
   handle('asset:read', async (input) => {
+    await writeQueue.catch(() => {});
     const id = z.string().parse(input);
     const asset = state.assets.find((a) => a.id === id);
     if (!asset) return null;
+    if (asset.gameBuild && asset.gameBuild !== (await gameAssets.load())?.build) return null;
     if (!/^[a-f0-9]{64}\.png$/.test(asset.filename)) return null;
     try {
-      const buffer = await fs.readFile(path.join(dataDirectory, 'assets', asset.filename));
+      const filename = path.join(dataDirectory, 'assets', asset.filename);
+      if ((await fs.stat(filename)).size > 12 * 1024 * 1024) return null;
+      const buffer = await fs.readFile(filename);
       if (createHash('sha256').update(buffer).digest('hex') !== asset.checksum) return null;
       return `data:image/png;base64,${buffer.toString('base64')}`;
     } catch {
       return null;
     }
   });
+  handle('game:library', () => gameAssets.load());
+  handle('game:inspect', async () => {
+    const selected = await dialog.showOpenDialog(main, {
+      title: 'Select your installed Steam Diablo IV folder',
+      properties: ['openDirectory'],
+    });
+    if (selected.canceled) return null;
+    return gameAssets.inspect(selected.filePaths[0]);
+  });
+  handle('game:extract', (input) =>
+    gameAssets.extract(z.array(z.string().min(1).max(200)).max(150).optional().parse(input)),
+  );
+  handle('game:resource', (input) =>
+    gameAssets.read(
+      z
+        .string()
+        .regex(/^\d+(\.\d+)?$/)
+        .parse(input),
+    ),
+  );
+  handle('game:cancel', () => gameAssets.cancel());
   handle('data:clear', async () => {
+    if (gameAssets.busy)
+      throw new Error('Cancel game asset extraction before clearing local data.');
     await writeQueue.catch(() => {});
     const directory = path.resolve(dataDirectory);
     if (directory === path.parse(directory).root) throw new Error('Invalid data directory.');
     await fs.rm(path.join(directory, 'assets'), { recursive: true, force: true });
     await fs.rm(path.join(directory, 'overlay-position.json'), { force: true });
+    await fs.rm(path.join(directory, 'game-library.json'), { force: true });
+    await fs.rm(path.join(directory, 'game-asset-selection.json'), { force: true });
     state = freshState();
     await persistState(directory, state);
     registerHotkeys(state.settings);
@@ -399,6 +436,7 @@ app.whenReady().then(async () => {
   });
 });
 app.on('will-quit', () => {
+  gameAssets.cancel();
   globalShortcut.unregisterAll();
   void stopOcr();
 });

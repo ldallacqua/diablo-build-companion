@@ -25,3 +25,7 @@ Screen coordinates are display-relative logical pixels, converted using the retu
 OCR's English model, worker and WASM core are packaged locally. The worker is initialized lazily and reused. No continuous recording or remote recognition occurs. Screenshots are byte/dimension limited, normalized/resized in memory and then discarded when the view/session changes. Latest extracted text persists for review; screenshot bytes do not.
 
 Extension seams: another validated BuildImporter, a local OCR service, richer data-driven rules, exact route data with provenance, and optional grounded explanation renderers. An external AI model is never required for decisions. The repository has no server, accounts, damage simulator or seasonal database.
+
+## Private installed-game resources
+
+Validated `game:*` IPC launches the unpacked `extractor.cjs` in a separate Electron Node process. The renderer never reads archives or paths directly. The host owns installation selection, worker cancellation, operation serialization, timeout/output bounds and schema validation. The worker traverses local Steam TVFS, decodes supported mip textures, crops sprite frames and writes checksum-addressed PNGs plus an atomic private index. `GameTheme` resolves semantic texture assignments via verified asset reads and applies CSS variables in main/overlay windows; `GameAssetLibrary` browses and assigns sprites. Original artwork and synthetic archive fixtures are the only pixels committed or packaged. See EXTRACTION.md and ADR 0005.

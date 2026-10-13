@@ -1,4 +1,21 @@
-# v0.1.0 release record
+# Release records
+
+## v0.2.0 — private Steam artwork
+
+Prepared on 2026-10-13. Adds a read-only static Steam archive worker, BC1/BC3/RGBA8/R8 conversion, original sprite browser/assignments and an optional private theme in desktop/overlay. The shipped package contains extractor code, numeric placement recipes and original fallback artwork. Game PNGs and private previews remain outside Git and packaging.
+
+Local Windows validation passed: lint, formatting, types, 35 unit/integration tests, six desktop/visual tests, four packaged-app tests against both the unpacked distribution and a real NSIS installation, and actual portable-wrapper OCR/restart. NSIS install/uninstall returned 0 and removed the test executable. The packaged application also indexed/extracted the owner's real Steam build, read 1,311 private resources and displayed its theme in the main window and overlay. One unavailable skill-tree archive was skipped. This does not verify live-game capture or publisher/anti-cheat approval.
+
+ASAR inventory inspection confirmed the unpacked extraction worker and MIT notices and found no private library index, extracted hash-named PNGs or scratch probe. The asset guard verifies 14 original/licensed files. CI and publication status will be recorded after the remote checks complete.
+
+| Artifact                       | Bytes     | SHA-256                                                            |
+| ------------------------------ | --------- | ------------------------------------------------------------------ |
+| Sanctum-0.2.0-x64-Setup.exe    | 138149763 | `7339d0edc136be0a2a513eec4fe4943d7a1a1fb63a1f58d09f30f3eb1c3d7cda` |
+| Sanctum-0.2.0-x64-Portable.exe | 137907024 | `e6e42b3a01f86132bda1bdb0d80eb97ee76af70f85faf1d34aee34dae3d550db` |
+
+Both packages are unsigned x64 prerelease builds. Battle.net, encrypted entries and unsupported texture codecs are not supported. No signing certificate or automatic updater is used. See EXTRACTION.md and TESTING.md for detailed limits.
+
+## v0.1.0
 
 This release is an unsigned Windows x64 MVP/prerelease. Its source, screenshots, data fixtures and license manifest are public; private assets and screenshots are excluded.
 

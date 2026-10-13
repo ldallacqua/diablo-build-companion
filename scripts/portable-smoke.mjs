@@ -6,7 +6,8 @@ import { createServer } from 'node:net';
 
 // The NSIS portable wrapper does not forward Node inspector output to Playwright's
 // Electron launcher. Test its actual child renderer through a loopback CDP port.
-const executable = path.resolve('release/Sanctum-0.1.0-x64-Portable.exe');
+const { version } = JSON.parse(await fs.readFile('package.json', 'utf8'));
+const executable = path.resolve(`release/Sanctum-${version}-x64-Portable.exe`);
 await fs.access(executable);
 const results = path.resolve('test-results');
 await fs.mkdir(results, { recursive: true });
