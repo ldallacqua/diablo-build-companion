@@ -47,43 +47,43 @@
       "path": "tests/visual/visual.spec.ts/advisor.png",
       "source": "Original Sanctum application screenshot baseline",
       "license": "MIT",
-      "sha256": "626f316405683dcc778e65a80535cd31bd257cfa7511b9d41bb5ec5ed0750234"
+      "sha256": "1d0f84941e8a15972f79460f25c529ed8262921b16e968a2ef24c88ed5e1390f"
     },
     {
       "path": "tests/visual/visual.spec.ts/dashboard.png",
       "source": "Original Sanctum application screenshot baseline",
       "license": "MIT",
-      "sha256": "6750c77d401846db52b7adc5471e3dd04f7a05bc5b5f914f96d9826124027c07"
+      "sha256": "801e5108b8e29b4fafbcace5ea3909f93108063d820ffe35dc75c4c5b9c95702"
     },
     {
       "path": "tests/visual/visual.spec.ts/overlay.png",
       "source": "Original Sanctum application screenshot baseline",
       "license": "MIT",
-      "sha256": "3cfd131234d86ec6db272bde5561f07cb057b4b8363ab4fe1ae17b64e8a4a898"
+      "sha256": "b745e460f0e6334f63c54e1678ce18a11e727a3af03d0421dabffd4f87bba0b5"
     },
     {
       "path": "tests/visual/visual.spec.ts/paragon.png",
       "source": "Original Sanctum application screenshot baseline",
       "license": "MIT",
-      "sha256": "e225f43c27945dfb62b33a056bbb87aa9f3f3d0fbe5cadae951aa1d11337574d"
+      "sha256": "56a82e615e266e21d24a2f2de378c120e79eb7cbf1b388cfab2d1d316125addc"
     },
     {
       "path": "tests/visual/visual.spec.ts/settings.png",
       "source": "Original Sanctum application screenshot baseline",
       "license": "MIT",
-      "sha256": "bee42ee40ce12b6c7598f8850d941ea29d487dae31097bf1e082e7564c24c527"
+      "sha256": "6576a1e608047b758dd966e481d4cdf542fa2547ae3b82887e34059016b72cf4"
     },
     {
       "path": "tests/visual/visual.spec.ts/skills.png",
       "source": "Original Sanctum application screenshot baseline",
       "license": "MIT",
-      "sha256": "31e8686bd07c79d369203be911090f41d8115f93892661e122d0ba1ba2ab63e9"
+      "sha256": "7ceb83d20510aa09a6655a1b8ec245fec2db6487ec04b521b6aaef73ebb08fab"
     },
     {
       "path": "tests/visual/visual.spec.ts/transition.png",
       "source": "Original Sanctum application screenshot baseline",
       "license": "MIT",
-      "sha256": "0d07c46e34b521d8ab5bb66986b77163045daa555f540505a26e5e8c9528ae60"
+      "sha256": "f978cc4740045c8e9e5b7378a19e12b775e1d15b652a7b8979f0ec0d8ade43e2"
     }
   ]
 }

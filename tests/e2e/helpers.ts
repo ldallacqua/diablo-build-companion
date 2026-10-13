@@ -5,7 +5,13 @@ import os from 'node:os';
 export async function launch(directory?: string) {
   const data = directory ?? (await fs.mkdtemp(path.join(os.tmpdir(), 'sanctum-e2e-')));
   const app = await _electron.launch({
-    args: process.env.SANCTUM_PACKAGED_EXE ? [] : ['.'],
+    // Keep native DPI rounding and color conversion consistent across Windows PCs.
+    // Physical mixed-DPI/HDR capture remains a separate manual smoke test.
+    args: [
+      '--force-device-scale-factor=1',
+      '--force-color-profile=srgb',
+      ...(process.env.SANCTUM_PACKAGED_EXE ? [] : ['.']),
+    ],
     executablePath: process.env.SANCTUM_PACKAGED_EXE,
     cwd: process.cwd(),
     env: { ...process.env, SANCTUM_TEST_DATA: data },
