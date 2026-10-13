@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-13",
+  "os": "Windows 11 x64",
+  "fixture": "Original 720x540 tooltip PNG; no game running",
+  "samples": [
+    {
+      "ocrMs": 320,
+      "totalUploadPipelineMs": 359,
+      "confidence": 93
+    },
+    {
+      "ocrMs": 182,
+      "totalUploadPipelineMs": 205,
+      "confidence": 93
+    },
+    {
+      "ocrMs": 187,
+      "totalUploadPipelineMs": 209,
+      "confidence": 93
+    },
+    {
+      "ocrMs": 178,
+      "totalUploadPipelineMs": 200,
+      "confidence": 93
+    },
+    {
+      "ocrMs": 186,
+      "totalUploadPipelineMs": 209,
+      "confidence": 93
+    },
+    {
+      "ocrMs": 180,
+      "totalUploadPipelineMs": 202,
+      "confidence": 93
+    }
+  ],
+  "totalWorkingSetMb": 750,
+  "totalPrivateMb": 329,
+  "processCount": 5,
+  "idleAfterWorkerRelease": {
+    "workingSetMb": 622,
+    "privateMb": 268
+  }
+}

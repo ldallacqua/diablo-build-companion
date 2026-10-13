@@ -1,0 +1,14 @@
+node_modules/
+dist/
+dist-host/
+release/
+test-results/
+playwright-report/
+resources/ocr/*.gz
+private-assets/
+screenshots/
+*.traineddata
+*.log
+.env*
+!.env.example
+state*.json

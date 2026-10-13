@@ -1,0 +1,13 @@
+# Compatibility, rights and privacy
+
+Sanctum is independent and is not affiliated with or approved by Blizzard Entertainment or Maxroll. The [Blizzard EULA](https://www.blizzard.com/en-us/legal/simple/bfbbb648-bcc6-4b78-a5c7-e2fe20c135df/blizzard-end-user-license-agreement) restricts unauthorized third-party software and platform modification. Using an OS API does not by itself establish publisher permission. No in-game policy guarantee is made for this release.
+
+The host captures only an explicitly requested screen region or user-uploaded image. It never reads game memory, injects code, hooks rendering, intercepts network traffic, modifies executables, automates inventory/skills/Paragon, hides from anti-cheat, bypasses DRM or extracts archives. The overlay is an ordinary separate Windows window; exclusive fullscreen is not supported as a guaranteed mode. Its topmost setting can cover other applications; the hide shortcut remains available. For unresolved compatibility, disable automatic overlay results and use the main companion with manually supplied screenshots/text. Do not use it where applicable rules prohibit it.
+
+No automated Maxroll import is claimed. Reference URLs and user-entered JSON are allowed by the software; users must have rights to the data they provide. Source attribution, season, patch and update date are retained. No scraped guide content or Blizzard-owned artwork is included.
+
+Assets: there is no game installation detector or game archive importer in the executable. Only ordinary raster images with explicit source/permission metadata can be privately imported. They are normalized and cached under the app's local data directory, never uploaded or distributed. Original generic icons and a generated scene work without game files. See ASSETS.md for provenance and third-party notices.
+
+Privacy: no account, backend, telemetry, remote OCR or screenshot uploads. English recognition runs locally with bundled resources. Screenshots stay in RAM for the current view/session; the last extracted item text, corrected attributes, builds, progression and settings persist locally. Clear Local Data deletes the app state and imported assets; Chromium/Electron may retain ordinary cache/log files until the data directory is removed after quitting. The installer does not silently delete personal builds on uninstall. Export before clearing.
+
+Remaining risk: broad publisher terms have not been resolved by explicit authorization. Actual Diablo IV modes, anti-cheat behavior and publisher acceptance were not tested or endorsed. This software makes advisory matches, not authoritative value/damage estimates. Native synthetic capture is distinct from a real-game test.
