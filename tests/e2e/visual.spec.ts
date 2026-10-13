@@ -4,6 +4,9 @@ import { launch, close } from './helpers';
 test('all principal screens and overlay match reviewed Windows baselines', async () => {
   const run = await launch();
   try {
+    // Electron initially clamps windows to the physical desktop (CI uses 1024 × 768).
+    // A fixed renderer viewport makes the reviewed pixels independent of that desktop.
+    await run.page.setViewportSize({ width: 1387, height: 885 });
     await run.page.getByRole('button', { name: 'Explore with example builds' }).click();
     await run.page.waitForTimeout(650);
     await expect(run.page.getByRole('alert')).toHaveCount(0);
@@ -26,6 +29,7 @@ test('all principal screens and overlay match reviewed Windows baselines', async
     await run.page.getByRole('button', { name: 'Open overlay', exact: true }).click();
     await expect.poll(() => run.app.windows().length).toBe(2);
     const overlay = run.app.windows().find((p) => p.url().endsWith('#overlay'))!;
+    await expect(overlay).toHaveTitle('Sanctum Overlay');
     await expect(overlay).toHaveScreenshot('overlay.png');
   } finally {
     await close(run.app);

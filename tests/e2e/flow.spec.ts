@@ -49,6 +49,17 @@ test('native overlay is transparent, always on top and recovers from click-throu
     await run.page.getByRole('button', { name: 'Explore with example builds' }).click();
     await run.page.getByRole('button', { name: 'Open overlay', exact: true }).click();
     await expect.poll(() => run.app.windows().length).toBe(2);
+    const overlay = run.app.windows().find((p) => p.url().endsWith('#overlay'))!;
+    await expect(overlay).toHaveTitle('Sanctum Overlay');
+    await expect
+      .poll(() =>
+        run.app.evaluate(({ BrowserWindow }) =>
+          BrowserWindow.getAllWindows()
+            .find((w) => w.webContents.getURL().endsWith('#overlay'))!
+            .isVisible(),
+        ),
+      )
+      .toBe(true);
     const props = await run.app.evaluate(({ BrowserWindow }) => {
       const w = BrowserWindow.getAllWindows().find((w) => w.getTitle() === 'Sanctum Overlay')!;
       return { top: w.isAlwaysOnTop(), opacity: w.getOpacity(), visible: w.isVisible() };
@@ -64,7 +75,6 @@ test('native overlay is transparent, always on top and recovers from click-throu
       .toBe(true);
     expect(props.visible).toBe(true);
     expect(props.opacity).toBeGreaterThan(0.9);
-    const overlay = run.app.windows().find((p) => p.url().endsWith('#overlay'))!;
     await expect(overlay.locator('html')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
     await run.page.getByRole('button', { name: 'Settings', exact: true }).click();
     await run.page.getByLabel('Click through overlay').check();
