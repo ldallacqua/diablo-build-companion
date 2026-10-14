@@ -6,7 +6,7 @@ A local-first Windows build companion with screenshot OCR, explainable two-build
 
 ![Item advisor](tests/visual/visual.spec.ts/advisor.png)
 
-Version **0.2.0 — MVP / prerelease**, with private Steam UI extraction and an optional authentic-asset theme. This is working software with tested original fixtures, not a complete seasonal planner or an officially approved game integration.
+Version **0.2.1 — MVP / prerelease**, with private Steam UI extraction, curated class/skill/slot icons and an optional authentic-asset theme. Buttons have distinct hover, pressed and disabled artwork; thin frame edges preserve the content hierarchy. This is working software with tested original fixtures, not a complete seasonal planner or an officially approved game integration.
 
 ## Install on Windows
 

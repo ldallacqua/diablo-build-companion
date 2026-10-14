@@ -12,7 +12,7 @@ export function GameTheme() {
     const root = document.documentElement;
     const names: string[] = [];
     let cancelled = false;
-    root.classList.remove('has-game-assets', 'has-game-icons');
+    root.classList.remove('has-game-assets');
     if (state.settings.gameTheme && window.sanctum) {
       void Promise.all(
         state.assets
@@ -31,26 +31,15 @@ export function GameTheme() {
         .then((loaded) => {
           if (!cancelled && loaded.includes('texture.panel.frame')) {
             root.classList.add('has-game-assets');
-            if (loaded.includes('texture.icon.generic')) root.classList.add('has-game-icons');
           }
         })
         .catch(() => {});
     }
     return () => {
       cancelled = true;
-      root.classList.remove('has-game-assets', 'has-game-icons');
+      root.classList.remove('has-game-assets');
       names.forEach((name) => root.style.removeProperty(name));
     };
   }, [state.settings.gameTheme, signature]);
   return null;
-}
-export function FrameOrnaments() {
-  return (
-    <span className="game-frame-corners" aria-hidden="true">
-      <i />
-      <i />
-      <i />
-      <i />
-    </span>
-  );
 }

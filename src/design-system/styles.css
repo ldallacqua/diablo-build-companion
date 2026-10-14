@@ -333,11 +333,11 @@ nav button.active {
     border-color 0.15s,
     transform 0.15s;
 }
-.button:hover {
+.button:hover:not(:disabled) {
   background: #303534;
   border-color: #60635a;
 }
-.button:active {
+.button:active:not(:disabled) {
   transform: translateY(1px);
 }
 .button.primary {
@@ -346,7 +346,7 @@ nav button.active {
   border-color: #e1c996;
   box-shadow: 0 2px 7px #0003;
 }
-.button.primary:hover {
+.button.primary:hover:not(:disabled) {
   background: #e1c895;
 }
 .button.ghost {
@@ -354,7 +354,7 @@ nav button.active {
   border-color: transparent;
   color: #c4b28c;
 }
-.button.ghost:hover {
+.button.ghost:hover:not(:disabled) {
   background: #c4b28c0d;
 }
 .button.danger {
@@ -1919,9 +1919,6 @@ input[type='checkbox'] {
 .overlay-html {
   background: transparent !important;
 }
-.game-frame-corners {
-  display: none;
-}
 .game-library {
   margin-bottom: 28px;
 }
@@ -2028,6 +2025,10 @@ input[type='checkbox'] {
   border-color: var(--gold);
   background: #222523;
 }
+.game-resource[aria-pressed='true'] {
+  border-color: var(--gold);
+  box-shadow: inset 0 0 0 1px var(--gold);
+}
 .game-resource-image {
   display: flex;
   align-items: center;
@@ -2088,161 +2089,290 @@ input[type='checkbox'] {
   max-height: 150px;
   object-fit: contain;
 }
-.has-game-assets .panel,
-.has-game-assets .overlay,
-.has-game-assets .build-card,
-.has-game-assets .next-skill,
-.has-game-assets .board-card {
-  position: relative;
-  border: 12px solid transparent;
-  border-image: var(--game-panel-frame) 28 / 12px / 0 stretch;
-  border-radius: 0;
-  background-color: #111211;
+/* Private game art is composed by role. Utility icons retain their own meaning. */
+.has-game-assets {
+  --bg: #111213;
+  --surface: #1b1b1b;
+  --surface-high: #242321;
+  --gold: #d7bd8a;
+  --gold-dim: #b39b72;
+  --muted: #a5a49e;
+  --border: #454038;
 }
-.has-game-assets .game-frame-corners {
-  display: block;
+.has-game-assets .workspace {
+  background: var(--bg);
+}
+.has-game-assets .sidebar {
+  background:
+    linear-gradient(#111313de, #141412e6),
+    var(--game-surface) center / 256px;
+  border-right: 1px solid #39372f;
+}
+.has-game-assets nav button {
+  position: relative;
+  border-radius: 2px;
+  color: #b9b6ad;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease;
+}
+.has-game-assets nav button > svg {
+  width: 23px;
+  height: 23px;
+}
+.has-game-assets nav button:hover:not(:disabled) {
+  background-color: #292925;
+  border-color: #49443a;
+  color: #f1e9db;
+}
+.has-game-assets nav button.active {
+  background-color: #30291f;
+  border-color: #67553b;
+  color: #f2d59f;
+  box-shadow: inset 2px 0 #d7b77b;
+}
+.has-game-assets nav button.active:hover:not(:disabled) {
+  background-color: #3d3223;
+  border-color: #967b50;
+}
+.has-game-assets nav button:active:not(:disabled) {
+  background-color: #201e1a;
+}
+.has-game-assets nav button.active::after {
+  content: '';
   position: absolute;
-  inset: -12px;
+  pointer-events: none;
+  inset: 0 0 -2px;
+  background: var(--game-nav-marker) bottom center / 100% auto no-repeat;
+}
+.game-icon {
+  display: block;
+  overflow: hidden;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+.has-game-assets .panel,
+.has-game-assets .build-card,
+.has-game-assets .overlay {
+  position: relative;
+  border-radius: 2px;
+  border-color: transparent;
+  background:
+    linear-gradient(#1c1c1bea, #171918f5),
+    var(--game-surface) center / 256px;
+  box-shadow: 0 6px 20px #0003;
+}
+.has-game-assets .panel::before,
+.has-game-assets .build-card::before,
+.has-game-assets .overlay::before,
+.has-game-assets .hero::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 5px solid transparent;
+  border-image: var(--game-panel-frame) 28 / 5px / 0 stretch;
   pointer-events: none;
   z-index: 1;
 }
-.has-game-assets .game-frame-corners i {
-  position: absolute;
-  width: 39px;
-  height: 39px;
-  background-size: contain;
-  background-repeat: no-repeat;
+.has-game-assets .item-panel::before,
+.has-game-assets .overlay::before,
+.has-game-assets .hero::before {
+  border-width: 7px;
+  border-image-width: 7px;
 }
-.has-game-assets .game-frame-corners i:nth-child(1) {
-  top: -3px;
-  left: -3px;
-  background-image: var(--game-corner-tl);
-}
-.has-game-assets .game-frame-corners i:nth-child(2) {
-  top: -3px;
-  right: -3px;
-  background-image: var(--game-corner-tr);
-}
-.has-game-assets .game-frame-corners i:nth-child(3) {
-  bottom: -3px;
-  left: -3px;
-  background-image: var(--game-corner-bl);
-}
-.has-game-assets .game-frame-corners i:nth-child(4) {
-  bottom: -3px;
-  right: -3px;
-  background-image: var(--game-corner-br);
-}
-.has-game-assets .sidebar {
-  background-image: linear-gradient(#0c0d0ce6, #10100fd9), var(--game-surface);
-  background-size: auto, 256px;
-  border-right: 5px solid transparent;
-  border-image: var(--game-panel-frame) 28 / 5px / 0 stretch;
+.has-game-assets .panel-head {
+  padding-bottom: 17px;
+  margin-bottom: 20px;
+  background: var(--game-divider) bottom center / 100% 5px no-repeat;
 }
 .has-game-assets .hero {
-  background-image: linear-gradient(90deg, #0c0c0cf5, #10100faf), var(--game-surface);
-  background-size: auto, 256px;
-  border: 10px solid transparent;
-  border-image: var(--game-panel-frame) 28 / 10px / 0 stretch;
-  border-radius: 0;
+  min-height: 250px;
+  border: 1px solid #474035;
+  border-radius: 2px;
+  background:
+    linear-gradient(90deg, #141615ec, #1b1d1aca),
+    var(--game-surface) center / 256px;
 }
-.has-game-assets .hero:after {
-  inset: auto;
-  left: auto;
-  top: auto;
+.has-game-assets .hero-content {
+  padding: 28px 32px;
+  max-width: 68%;
+}
+.has-game-assets .hero h2 {
+  font-size: 36px;
+}
+.has-game-assets .hero p {
+  max-width: 430px;
+}
+.has-game-assets .hero::after {
+  inset: 20px 34px 20px auto;
+  width: 28%;
+  background: var(--game-hero-angel) center / contain no-repeat;
+  filter: brightness(1.9);
+  opacity: 0.9;
+}
+.has-game-assets .hero-meta {
+  margin-top: 20px;
+}
+.has-game-assets .hero-symbol {
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  bottom: 15px;
+  right: 28px;
+  width: 30%;
+  height: 18px;
+  background: var(--game-ornament) center / contain no-repeat;
+}
+.has-game-assets .hero-symbol > svg {
+  display: none;
+}
+/* Slice the frame into fixed-size corners/edges. Only its central texture stretches. */
+.has-game-assets .button:is(.secondary, .primary, .danger) {
+  --button-art: var(--game-button);
+  --button-hover-art: var(--game-button-hover, var(--game-button));
+  --button-pressed-art: var(--game-button-pressed, var(--game-button));
+  --button-slice: 20;
+  --button-edge: 7px;
+  position: relative;
+  isolation: isolate;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: #202321;
+  color: #eee7db;
+  text-shadow: 0 1px 2px #000;
+  box-shadow: 0 2px 4px #0004;
+  min-height: 40px;
+  padding: 10px 17px;
+  transition:
+    color 120ms ease,
+    box-shadow 120ms ease,
+    transform 80ms ease;
+}
+.has-game-assets .button:is(.secondary, .primary, .danger)::before {
   content: '';
   position: absolute;
-  right: 32px;
-  bottom: 26px;
-  width: 50%;
-  height: 70px;
-  background: var(--game-ornament) center / contain no-repeat;
-  opacity: 0.75;
+  inset: -1px;
   pointer-events: none;
+  z-index: -1;
+  border: var(--button-edge) solid transparent;
+  border-image: var(--button-art) var(--button-slice) fill / var(--button-edge) / 0 stretch;
 }
-.has-game-assets .button,
-.has-game-assets nav button.active {
-  background-image: var(--game-button);
-  background-size: 100% 100%;
-  border-color: transparent;
-  border-radius: 0;
+.has-game-assets .button:is(.primary, .danger) {
+  --button-art: var(--game-button-primary, var(--game-button));
+  --button-hover-art: var(
+    --game-button-primary-hover,
+    var(--game-button-primary, var(--game-button))
+  );
+  --button-pressed-art: var(
+    --game-button-primary-pressed,
+    var(--game-button-primary, var(--game-button))
+  );
+  --button-slice: 28;
+  --button-edge: 6px;
+  background-color: #451511;
 }
-.has-game-assets .button.primary {
-  background-image: var(--game-button-primary);
-  color: #f3e7d2;
-  text-shadow: 0 1px 2px #000;
+.has-game-assets .button:is(.secondary, .primary, .danger):hover:not(:disabled) {
+  color: #fff5df;
+  box-shadow:
+    0 2px 6px #0007,
+    0 0 0 1px #d3ba7a55;
+}
+.has-game-assets .button:is(.secondary, .primary, .danger):hover:not(:disabled)::before {
+  border-image-source: var(--button-hover-art);
+}
+.has-game-assets .button:is(.secondary, .primary, .danger):active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px #0006;
+}
+.has-game-assets .button:is(.secondary, .primary, .danger):active:not(:disabled)::before {
+  border-image-source: var(--button-pressed-art);
+}
+.has-game-assets .button:disabled {
+  opacity: 0.45;
+  transform: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+.has-game-assets .button:disabled::before {
+  border-image-source: var(--game-button-disabled, var(--button-art));
+}
+.has-game-assets .button.ghost {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #c9b58f;
+  box-shadow: none;
+}
+.has-game-assets .button.ghost:hover:not(:disabled) {
+  background-color: #cbb98c12;
+  border-color: #8c795d55;
+  color: #f2d9ac;
+}
+.has-game-assets .asset-icon {
+  border: 1px solid #6d5b3e;
+  border-radius: 2px;
+  background: #0f1111;
+  box-shadow: inset 0 0 0 2px #232422;
+  padding: 3px;
+}
+.has-game-assets .asset-icon > .game-icon {
+  width: 75%;
+  height: 75%;
+}
+.has-game-assets .asset-icon.has-image {
+  padding: 2px;
+}
+.has-game-assets .next-skill .asset-icon {
+  width: 88px;
+  height: 88px;
+}
+.has-game-assets .skill-step .asset-icon {
+  width: 48px;
+  height: 48px;
+}
+.has-game-assets .objective-body .asset-icon {
+  width: 46px;
+  height: 46px;
 }
 .has-game-assets input:not([type='checkbox']):not([type='range']),
 .has-game-assets select,
 .has-game-assets textarea {
-  border: 6px solid transparent;
-  border-image: var(--game-panel-frame) 28 / 6px / 0 stretch;
-  border-radius: 0;
-  background-color: #10110f;
+  border-radius: 2px;
+  background-color: #111413;
+  border-color: #575247;
 }
-.has-game-assets .panel-head {
-  padding-bottom: 14px;
-  margin-bottom: 15px;
-  background: var(--game-divider) bottom center / 100% 9px no-repeat;
+.has-game-assets input:hover,
+.has-game-assets select:hover,
+.has-game-assets textarea:hover {
+  border-color: #aa9369;
 }
-.has-game-assets .asset-icon {
-  background-image: var(--game-surface);
-  border: 6px solid transparent;
-  border-image: var(--game-panel-frame) 28 / 6px / 0 stretch;
-  border-radius: 0;
+.has-game-assets :is(.overlay-toggle, .icon-button, .check-row, .last-item):hover:not(:disabled) {
+  background-color: #c9b48112;
+  color: #f2d9ac;
 }
-.has-game-icons svg.lucide {
-  stroke: transparent;
-  background-image: var(--game-icon-generic);
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
+.has-game-assets .overlay-buttons button:hover:not(:disabled) {
+  background-color: #d3bb8033;
+  color: #fff2d9;
 }
-.has-game-icons svg.lucide-x {
-  background-image: var(--game-icon-close, var(--game-icon-generic));
+.has-game-assets :is(button, input, select, textarea, summary):focus-visible {
+  outline: 2px solid #f0d9a8;
+  outline-offset: 3px;
 }
-.has-game-icons svg.lucide-check,
-.has-game-icons svg.lucide-circle-check {
-  background-image: var(--game-icon-check, var(--game-icon-generic));
+@media (max-width: 850px) {
+  .has-game-assets .hero-content {
+    max-width: 80%;
+    padding: 26px;
+  }
+  .has-game-assets .hero::after {
+    right: 16px;
+    width: 22%;
+    opacity: 0.5;
+  }
+  .has-game-assets .hero-symbol {
+    display: none;
+  }
 }
-.has-game-icons svg.lucide-layout-dashboard,
-.has-game-icons svg.lucide-grid-2x2,
-.has-game-icons svg.lucide-monitor {
-  background-image: var(--game-icon-grid, var(--game-icon-generic));
-}
-.has-game-icons svg.lucide-sparkles,
-.has-game-icons svg.lucide-swords {
-  background-image: var(--game-icon-skills, var(--game-icon-generic));
-}
-.has-game-icons svg.lucide-compass,
-.has-game-icons svg.lucide-diamond {
-  background-image: var(--game-icon-paragon, var(--game-icon-generic));
-}
-.has-game-icons svg.lucide-git-branch,
-.has-game-icons svg.lucide-layers,
-.has-game-icons svg.lucide-external-link {
-  background-image: var(--game-icon-compare, var(--game-icon-generic));
-}
-.has-game-icons svg.lucide-archive,
-.has-game-icons svg.lucide-scan-line {
-  background-image: var(--game-icon-inventory, var(--game-icon-generic));
-}
-.has-game-icons svg.lucide-chevron-right,
-.has-game-icons svg.lucide-arrow-right,
-.has-game-icons svg.lucide-arrow-up-right {
-  background-image: var(--game-icon-arrow, var(--game-icon-generic));
-}
-.has-game-assets .overlay {
-  border-width: 9px;
-  border-image-width: 9px;
-}
-.has-game-assets .overlay .game-frame-corners {
-  inset: -9px;
-}
-.has-game-assets .overlay .game-frame-corners i {
-  width: 29px;
-  height: 29px;
-}
+
 @media (max-width: 850px) {
   .game-library-toolbar {
     align-items: flex-start;

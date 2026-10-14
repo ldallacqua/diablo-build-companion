@@ -16,6 +16,10 @@ for (const directory of [data, previews]) {
 }
 await fs.mkdir(previews, { recursive: true });
 async function snapshot(page, name) {
+  await page.mouse.move(1000, 40);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expect(page.locator('nav button:hover')).toHaveCount(0);
+  await page.waitForTimeout(180);
   await page.evaluate(async () => {
     await document.fonts.ready;
     const root = document.documentElement;
@@ -60,22 +64,69 @@ try {
   ).toBeEnabled();
   await page.getByRole('button', { name: 'Use Diablo IV theme', exact: true }).click();
   await expect(page.locator('html')).toHaveClass(/has-game-assets/);
-  await expect(page.locator('html')).toHaveClass(/has-game-icons/);
+  await expect(page.locator('nav [data-game-icon]')).toHaveCount(6);
   await page.getByRole('button', { name: 'Overview', exact: true }).click();
+  await page.mouse.move(1000, 50);
   await snapshot(page, 'diablo-overview.png');
+  const evaluateButton = page.getByRole('button', { name: 'Evaluate an item', exact: true });
+  const buttonArt = () =>
+    evaluateButton.evaluate((el) => getComputedStyle(el, '::before').borderImageSource);
+  const normal = await buttonArt();
+  await evaluateButton.screenshot({ path: path.join(previews, 'button-normal.png') });
+  await evaluateButton.hover();
+  await expect.poll(buttonArt).not.toBe(normal);
+  const hovered = await buttonArt();
+  await evaluateButton.screenshot({ path: path.join(previews, 'button-hover.png') });
+  await page.mouse.down();
+  await expect.poll(buttonArt).not.toBe(hovered);
+  await evaluateButton.screenshot({ path: path.join(previews, 'button-pressed.png') });
+  await page.mouse.move(1000, 40);
+  await page.mouse.up();
+  await expect.poll(buttonArt).toBe(normal);
+  await evaluateButton.focus();
+  await page.keyboard.press('Shift+Tab');
+  await page.keyboard.press('Tab');
+  await expect(evaluateButton).toBeFocused();
+  await expect(evaluateButton).toHaveCSS('outline-style', 'solid');
+  await evaluateButton.screenshot({ path: path.join(previews, 'button-focus.png') });
   await page.getByRole('button', { name: 'Item advisor', exact: true }).click();
   await page.getByRole('button', { name: 'Load synthetic example' }).click();
   await page.getByRole('button', { name: 'Confirm corrected text' }).click();
   await snapshot(page, 'diablo-advisor.png');
   await page.getByRole('button', { name: 'Skills', exact: true }).click();
+  await expect(page.locator('[data-asset-id="skill.sorcerer.spark"] img').first()).toBeVisible();
+  await expect(
+    page.locator('[data-asset-id="skill.sorcerer.chainlightning"] img').first(),
+  ).toBeVisible();
   await snapshot(page, 'diablo-skills.png');
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
+  const disabled = page.getByRole('button', { name: 'Previous', exact: true });
+  await expect(disabled).toBeDisabled();
+  await disabled.screenshot({ path: path.join(previews, 'button-disabled.png') });
   await snapshot(page, 'diablo-asset-library.png');
   await page.getByRole('button', { name: 'Open overlay', exact: true }).click();
   await expect.poll(() => app.windows().length).toBe(2);
   const overlay = app.windows().find((p) => p.url().endsWith('#overlay'));
   await expect(overlay.locator('html')).toHaveClass(/has-game-assets/);
   await snapshot(overlay, 'diablo-overlay.png');
+  await page.getByRole('button', { name: 'Overview', exact: true }).click();
+  for (const [width, height, zoom] of [
+    [1920, 1080, 1],
+    [2560, 1440, 1],
+    [3840, 2160, 2],
+    [1050, 750, 1],
+  ]) {
+    await page.setViewportSize({ width, height });
+    await app.evaluate(({ BrowserWindow }, zoom) => {
+      BrowserWindow.getAllWindows()
+        .find((w) => w.getTitle().startsWith('Sanctum —'))
+        .webContents.setZoomFactor(zoom);
+    }, zoom);
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
+      .toBe(true);
+    await snapshot(page, `diablo-overview-${width}.png`);
+  }
   const library = await page.evaluate(() => window.sanctum.gameLibrary());
   console.log(
     JSON.stringify({

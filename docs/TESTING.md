@@ -4,6 +4,8 @@ Validation date: 2026-10-13. Local target: Windows 11 x64 (build 26200), Electro
 
 ## Automated checks
 
+v0.2.1 design correction: 38 unit/integration and seven native desktop tests passed locally. The additional theme regression uses original synthetic pixels and checks normal/hover/pressed/reset/disabled artwork, keyboard focus, navigation hover reset, alpha-padding correction and unchanged utility-icon meaning. Migration tests preserve manual assets, custom theme bindings and exact class-scoped skill lookups. Original fallback screenshot baselines continue to pass without replacing them with game-art images. Private real-art screenshots separately exercise the curated preset and verified Spark/Chain Lightning artwork. Packaged results are recorded in RELEASE.md after completion.
+
 - 35 unit/integration tests passed: exact item/affix parsing, aliases, greater markers, preserved crafting text, low confidence, active/future verdicts, incomplete/unique discard protection, unit-aware equipped comparisons, skill/milestone progression, transition conditions/actions, partial JSON normalization, matching-class imports, URL validation, migration, atomic storage, corrupt-file handling, fallback resolution and actual OCR of two original PNG fixtures. Added original synthetic Steam TVFS/texture archives, source preservation/cache confinement, BLTE N/Z and encrypted rejection, invalid manifests/layouts, BC3 alpha/padded pitch and transparent-centred frame assembly.
 - 6 Windows Playwright/Electron tests passed: onboarding → OCR upload → STASH FOR ENDGAME → skill progress → accepted transition → KEEP → restart/persistence; native topmost/transparent/opacity overlay plus click-through recovery; real private raster-cache write/read/checksum/missing-file handling; extractor-worker indexing/conversion, sprite browsing, semantic assignment, optional theme persistence/disable; seven original-theme screenshot views; logical 1080p, 1440p, 4K at 200% zoom and compact desktop containment.
 - 4 packaged Windows tests passed against both the v0.2 unpacked distribution and a real NSIS installation: OCR/progression/restart flow, native overlay, private image cache and real extraction worker with original miniature archives. The installer and uninstaller returned 0; the test executable was removed. The actual portable wrapper passed startup, bundled OCR, verdict, clean exit and persistence. Historical v0.1 results remain recorded in RELEASE.md.
@@ -34,7 +36,7 @@ pnpm assets:check
 pnpm test:e2e
 pnpm package:win
 $env:SANCTUM_PACKAGED_EXE = (Resolve-Path 'release/win-unpacked/Sanctum.exe').Path
-pnpm exec playwright test tests/e2e/flow.spec.ts tests/e2e/gameAssets.spec.ts
+pnpm exec playwright test tests/e2e/flow.spec.ts tests/e2e/gameAssets.spec.ts tests/e2e/theme.spec.ts
 ```
 
 Packaged validation exercises real shipped OCR paths/resources, not source module mocks. Installer installation/uninstallation and portable startup are separately noted in RELEASE.md. Do not label them tested until performed.

@@ -3,7 +3,12 @@ import { FolderOpen, Download, Palette, Search, X } from 'lucide-react';
 import { useApp } from '../app/store';
 import { Badge, Button, Panel } from '../components/ui';
 import type { GameInspection, GameLibrary, GameResource } from '../shared/gameAssets';
-import { resourceAsset, starterAssets, starterBindings } from '../services/gameAssets';
+import {
+  resourceAsset,
+  starterAssets,
+  starterBindings,
+  applyStarterTheme,
+} from '../services/gameAssets';
 
 function ResourceImage({ resource }: { resource: GameResource }) {
   const [image, setImage] = useState<string | null>(null);
@@ -79,13 +84,9 @@ export function GameAssetLibrary() {
       message('Extract the core UI pack before applying its theme.');
       return;
     }
-    const ids = new Set(assets.map((a) => a.id));
     update((s) => ({
       ...s,
-      assets: [
-        ...s.assets.filter((a) => !ids.has(a.id) && !a.id.startsWith('texture.corner.')),
-        ...assets,
-      ],
+      assets: applyStarterTheme(s.assets, library),
       settings: { ...s.settings, gameTheme: true },
     }));
   }
@@ -227,9 +228,6 @@ export function GameAssetLibrary() {
                   {Object.keys(starterBindings).map((id) => (
                     <option key={id} value={id} />
                   ))}
-                  {['tl', 'tr', 'bl', 'br'].map((corner) => (
-                    <option key={corner} value={`texture.corner.${corner}`} />
-                  ))}
                   <option value="skill.spark-1" />
                   <option value="class.sorcerer" />
                   <option value="item.ring" />
@@ -252,6 +250,7 @@ export function GameAssetLibrary() {
                 key={r.key}
                 onClick={() => setSelected(r)}
                 aria-label={`Select ${r.name}`}
+                aria-pressed={selected?.key === r.key}
               >
                 <span className="game-resource-image">
                   <ResourceImage resource={r} />

@@ -10,7 +10,8 @@ import {
 } from 'lucide-react';
 import { useApp } from '../app/store';
 import { fallbackAsset, resolveAsset } from '../services/assets';
-import { FrameOrnaments } from './gameTheme';
+import { GameIcon } from './gameIcon';
+import { skillArtworkId } from '../services/gameSkillIcons';
 export function FocusScope({
   children,
   className,
@@ -117,7 +118,6 @@ export function Panel({
 }) {
   return (
     <section className={`panel ${className}`}>
-      <FrameOrnaments />
       {(title || eyebrow) && (
         <div className="panel-head">
           <div>
@@ -179,23 +179,53 @@ export function AssetIcon({
 }) {
   const { state } = useApp();
   const [source, setSource] = useState<string | null>(null);
-  const asset = resolveAsset(id, state.assets, state.builds[state.active]?.patch ?? '*');
+  const build = state.builds[state.active];
+  const step = id.startsWith('skill.')
+    ? build?.skills.find((s) => `skill.${s.id}` === id)
+    : undefined;
+  const canonicalId =
+    step && state.settings.gameTheme ? skillArtworkId(build!.class, step.name) : undefined;
+  const asset =
+    resolveAsset(id, state.assets, build?.patch ?? '*') ??
+    (canonicalId ? resolveAsset(canonicalId, state.assets, build?.patch ?? '*') : undefined);
   useEffect(() => {
     let cancelled = false;
     setSource(null);
     if (asset && window.sanctum)
-      void window.sanctum.readAsset(id).then((src) => {
-        if (!cancelled) setSource(src);
-      });
+      void window.sanctum
+        .readAsset(asset.id)
+        .then((src) => {
+          if (!cancelled) setSource(src);
+        })
+        .catch(() => {});
     return () => {
       cancelled = true;
     };
-  }, [id, asset?.checksum]);
+  }, [asset?.id, asset?.checksum]);
   const Fallback =
     Icon ?? { spark: Sparkles, sword: Swords, shield: Shield, diamond: Diamond }[fallbackAsset(id)];
   return (
-    <div className={`asset-icon ${className}`}>
-      {source ? <img src={source} alt="" /> : <Fallback aria-hidden="true" size={26} />}
+    <div
+      className={`asset-icon ${source ? 'has-image' : ''} ${className}`}
+      data-asset-id={source ? asset?.id : undefined}
+    >
+      {source ? (
+        <img src={source} alt="" />
+      ) : (
+        <GameIcon
+          name={
+            id.startsWith('skill.')
+              ? 'skills'
+              : id.startsWith('item.')
+                ? 'equipment'
+                : id.startsWith('class.')
+                  ? 'character'
+                  : 'paragon'
+          }
+          fallback={Fallback}
+          size={26}
+        />
+      )}
     </div>
   );
 }

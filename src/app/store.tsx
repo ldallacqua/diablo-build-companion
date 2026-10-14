@@ -3,6 +3,7 @@ import { freshState, type AppState } from '../domain/models';
 import { catalogue, parseItem } from '../domain/parser';
 import { loadBrowserState, saveBrowserState } from '../services/storage';
 import type { OcrResult } from '../shared/bridge';
+import { upgradeStarterTheme } from '../services/gameAssets';
 interface Store {
   state: AppState;
   ready: boolean;
@@ -40,6 +41,19 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     let cancelled = false;
     const host = window.sanctum;
     void (host ? host.load() : Promise.resolve(loadBrowserState()))
+      .then(async (data) => {
+        if (host && data.settings.gameTheme) {
+          const library = await host.gameLibrary().catch(() => null);
+          if (library) {
+            const assets = upgradeStarterTheme(data.assets, library);
+            if (assets !== data.assets) {
+              data = { ...data, assets };
+              await host.save(data).catch((e) => setError(String(e)));
+            }
+          }
+        }
+        return data;
+      })
       .then((data) => {
         if (!cancelled) {
           current.current = data;

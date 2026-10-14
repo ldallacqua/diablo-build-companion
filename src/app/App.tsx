@@ -21,13 +21,14 @@ import { Overlay } from '../features/overlay';
 import { withExamples } from '../data/examples';
 import { messages, type Page } from '../shared/i18n';
 import { GameTheme } from '../components/gameTheme';
-const pages: { id: Page; icon: typeof ScanLine }[] = [
-  { id: 'dashboard', icon: LayoutDashboard },
-  { id: 'advisor', icon: ScanLine },
-  { id: 'skills', icon: Sparkles },
-  { id: 'paragon', icon: Compass },
-  { id: 'builds', icon: GitBranch },
-  { id: 'settings', icon: Settings2 },
+import { GameIcon, type GameIconName } from '../components/gameIcon';
+const pages: { id: Page; icon: typeof ScanLine; art?: GameIconName }[] = [
+  { id: 'dashboard', icon: LayoutDashboard, art: 'overview' },
+  { id: 'advisor', icon: ScanLine, art: 'inventory' },
+  { id: 'skills', icon: Sparkles, art: 'skills' },
+  { id: 'paragon', icon: Compass, art: 'paragon' },
+  { id: 'builds', icon: GitBranch, art: 'compare' },
+  { id: 'settings', icon: Settings2, art: 'settings' },
 ];
 function Workspace() {
   const { state, ready, error, message, update } = useApp();
@@ -65,14 +66,14 @@ function Workspace() {
         </div>
         <div className="nav-label">YOUR WORKSPACE</div>
         <nav aria-label="Main navigation">
-          {pages.map(({ id, icon: Icon }) => (
+          {pages.map(({ id, icon: Icon, art }) => (
             <button
               key={id}
               aria-current={page === id ? 'page' : undefined}
               className={page === id ? 'active' : ''}
               onClick={() => setPage(id)}
             >
-              <Icon size={18} />
+              {art ? <GameIcon name={art} fallback={Icon} size={18} /> : <Icon size={18} />}
               {labels[id]}
               {page === id && <span className="nav-dot" />}
             </button>
@@ -101,7 +102,7 @@ function Workspace() {
               </small>
             </div>
           </div>
-          <small className="version">v0.2.0 · Independent companion</small>
+          <small className="version">v0.2.1 · Independent companion</small>
         </div>
       </aside>
       <div className="workspace">

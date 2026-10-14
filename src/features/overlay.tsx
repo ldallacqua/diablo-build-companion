@@ -3,7 +3,6 @@ import { useEffect, useRef } from 'react';
 import { useApp } from '../app/store';
 import { evaluate } from '../domain/recommendations';
 import { Badge, Logo } from '../components/ui';
-import { FrameOrnaments } from '../components/gameTheme';
 export function Overlay() {
   const card = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -28,7 +27,6 @@ export function Overlay() {
     : null;
   return (
     <div ref={card} className={`overlay ${state.settings.compact ? 'compact' : ''}`}>
-      <FrameOrnaments />
       <header className="overlay-drag">
         <Logo />
         <span>SANCTUM</span>

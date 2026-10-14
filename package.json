@@ -1,7 +1,7 @@
 {
   "name": "diablo-build-companion",
   "productName": "Sanctum",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Local-first Diablo IV build companion, screenshot advisor and desktop overlay",
   "author": "Lucas Dallacqua",
   "license": "MIT",
